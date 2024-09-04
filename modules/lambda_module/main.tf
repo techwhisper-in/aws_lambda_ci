@@ -1,15 +1,15 @@
 resource "aws_lambda_function" "lambda_function" {
-    function_name = "LambdaFunctionTestTf"
-    role = "arn:aws:iam::590183834329:role/fetch-delete-unattached-ebs-role"
+    function_name = var.lambda_function_name
+    role = var.lambda_execution_role
     handler = var.lambda_function_handler
     runtime = var.lambda_runtime_environment
     timeout = var.timeout
     memory_size = var.memory_size
     s3_bucket = var.lambda_bucket
     s3_key = var.lambda_package
-    kms_key_arn = "arn:aws:kms:ap-south-1:590183834329:key/5c803437-93f8-4312-bdb1-a3c37c316e0b"
+    kms_key_arn = var.kms_key
     tracing_config {
-      mode = "Active"
+      mode = var.tracing_configuration
     }
     layers = var.layer_arns
     environment {
