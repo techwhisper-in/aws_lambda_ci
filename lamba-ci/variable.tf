@@ -1,3 +1,12 @@
+variable "assume_role_arn" {
+  type = string
+  description = "The role ARN that has access to resource"
+}
+variable "infra_region" {
+  type = string
+  default = "ap-south-1"
+  description = "Region where resource will be created"
+}
 variable "lambda_function_name" {
   description = "Name of lambda function"
   type = string
@@ -32,14 +41,14 @@ variable "tracing_configuration" {
   description = "Tracing Configuration for Lambda"
   type = string
 }
-variable "lambda_bucket" {
+/*variable "lambda_bucket" {
   description = "S3 bucket where Lambda code is stored"
   type = string
 }
 variable "lambda_package" {
   description = "S3 key for lambda code package"
   type = string
-}
+}*/
 variable "lambda_function_handler" {
   description = "Handler for lambda function"
   type = string
