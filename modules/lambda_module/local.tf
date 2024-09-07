@@ -11,8 +11,8 @@ locals {
 
 resource "local_file" "lambda_code" {
     content = (length(regexall("python",var.lambda_runtime_environment))>0)==true ? local.python_content : local.js-content
-    filename = "${path.module}/parent_folder/${local.path_of_main_file}.py"
-  
+    #filename = "${path.module}/parent_folder/${local.path_of_main_file}.py"
+  filename=(length(regexall("python",var.lambda_runtime_environment))>0)==true ? "${path.module}/parent_folder/${local.path_of_main_file}.py" : "${path.module}/parent_folder/${local.path_of_main_file}.js"
 }
 
 data "archive_file" "lambda_zip" {
