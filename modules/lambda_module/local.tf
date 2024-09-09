@@ -7,12 +7,13 @@ locals {
 
   python_content="def ${local.handler_function_name}(event, context):\n    return {'statusCode': 200,'body': 'Hello from AWS Lambda!'}"
   js-content="exports.${local.handler_function_name} = async () => {return {statusCode: 200,body: 'Hello from AWS Lambda!'};};"
+  java-content="some-code"
 }
 
 resource "local_file" "lambda_code" {
-    content = (length(regexall("python",var.lambda_runtime_environment))>0)==true ? local.python_content : local.js-content
+    content = (length(regexall("python",var.lambda_runtime_environment))>0)==true ? local.python_content : (length(regexall("python",var.lambda_runtime_environment))>0)==true ? local.js-content : local.java-content
     #filename = "${path.module}/parent_folder/${local.path_of_main_file}.py"
-  filename=(length(regexall("python",var.lambda_runtime_environment))>0)==true ? "${path.module}/parent_folder/${local.path_of_main_file}.py" : "${path.module}/parent_folder/${local.path_of_main_file}.js"
+  filename=(length(regexall("python",var.lambda_runtime_environment))>0)==true ? "${path.module}/parent_folder/${local.path_of_main_file}.py" : (length(regexall("python",var.lambda_runtime_environment))>0)==true ? "${path.module}/parent_folder/${local.path_of_main_file}.js" : "${path.module}/parent_folder/${local.path_of_main_file}"
 }
 
 data "archive_file" "lambda_zip" {
